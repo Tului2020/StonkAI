@@ -17,6 +17,8 @@ const timePeriodOptions = {
 
 }
 
+let exportableCSVData = "";
+
 // FUNCTIONS
 const urlGenerator = (func, symbol) => {
   let returnURL = `${baseURL}function=${func}&symbol=${symbol}${(func === 'TIME_SERIES_DAILY_ADJUSTED') ? ('&outputsize=full') : ('')}&apikey=${apiKey}`
@@ -24,9 +26,7 @@ const urlGenerator = (func, symbol) => {
   return returnURL
 }
 
-const exportCSVHandle = () => {
-  console.log("export CSV")
-}
+
 
 
 const fetchIinformation = (func, symbol, deconstructName) => {
@@ -46,6 +46,7 @@ const displayData = (data) => {
 
   // clears previous data
   removeAllChildNodes(tableEl);
+  exportableCSVData = columns.join(',') + '\n';
 
   // creates header
   let columnEl = document.createElement("tr");
@@ -61,14 +62,16 @@ const displayData = (data) => {
   dates.forEach(date => {
     let rowEl = document.createElement("tr");
     let rowItems = [date].concat(Object.values(data[date]));
-
+  
     
     rowItems.forEach(rowItem => {
       let rowColEl = document.createElement("td");
       rowColEl.innerText = rowItem
       rowEl.appendChild(rowColEl)
     });
-    tableEl.appendChild(rowEl)
+    tableEl.appendChild(rowEl);
+
+    exportableCSVData += rowItems.join(',') + "\n";
   })
 
 
@@ -81,4 +84,23 @@ const removeAllChildNodes = (parent) => {
   }
 }
 
+
+
+function exportCSVHandle() {  
+  
+ let ticker = document.getElementById("input-value").value;
+ let timeSeries = document.getElementById("time-series").value;
+
+  //display the created CSV data on the web browser   
+  document.write(exportableCSVData);  
+
+   
+  var hiddenElement = document.createElement('a');  
+  hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(exportableCSVData);  
+  hiddenElement.target = '_blank';  
+    
+  //provide the name for the CSV file to be downloaded  
+  hiddenElement.download = `${ticker}-${timeSeries}.csv`;  
+  hiddenElement.click();  
+}  
 
