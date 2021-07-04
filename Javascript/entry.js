@@ -28,7 +28,7 @@ timeSeriesArray.forEach(name => {
   let newOption = document.createElement("option");
   newOption.value = name;
   newOption.innerText = name;
-  if (name === 'daily')
+  if (name === 'dailyAdjusted' || name=== 'daily')
     timeSeriesDropDown.appendChild(newOption)
 });
 
