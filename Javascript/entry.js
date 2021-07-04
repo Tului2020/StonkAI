@@ -1,28 +1,35 @@
-let inputClick = document.getElementById("input-click");
-inputClick.onclick = () => {
+document.getElementById("input-value").value = "TSLA"
+
+let fetchDataEl = document.getElementById("input-click");
+fetchDataEl.onclick = () => {
   let chosenTicker = document.getElementById("input-value").value;
-  let chosenTimeSeries = document.getElementById("time-series").value;
-  fetchIinformation(chosenTimeSeries, chosenTicker)
+  let chosenTimeSeries = timePeriodOptions[document.getElementById("time-series").value].apiFunction;
+  let deconstructName = timePeriodOptions[document.getElementById("time-series").value].deconstructName
+  fetchIinformation(chosenTimeSeries, chosenTicker, deconstructName)
 };
 
+// export 
+let exportCSVEl = document.getElementById("export-csv");
+exportCSVEl.onclick = exportCSVHandle;
+
+
+// table 
+let tableEl = document.getElementById("result");
 
 
 
 // Dropdown Option
 let timeSeriesDropDown = document.getElementById("time-series");
 let timeSeriesArray = Object.keys(timePeriodOptions).map(name => {
-
-  return {
-    value: timePeriodOptions[name].apiFunction,
-    name: timePeriodOptions[name].name,
-  }
+  return timePeriodOptions[name].name
 });
 
-timeSeriesArray.forEach(({value, name}) => {
+timeSeriesArray.forEach(name => {
   let newOption = document.createElement("option");
-  newOption.value = value;
+  newOption.value = name;
   newOption.innerText = name;
-  timeSeriesDropDown.appendChild(newOption)
+  if (name === 'daily')
+    timeSeriesDropDown.appendChild(newOption)
 });
 
 
