@@ -7,7 +7,7 @@
   <title>StonkAI</title>
   <script src="./Javascript/AlphavantageAPI.js"></script>
   <script src="./Javascript/entry.js" defer></script>
-  
+  <link rel="stylesheet" href="StonkAI.css">
 
 </head>
 <body>
@@ -15,16 +15,21 @@
 
 
     <div id="input-div">
-      Ticker: 
-      <input type="text" id="input-value">
-      <select name="time-series-options" id="time-series"></select>
-
-      <button id="input-click">inputClickHandle()</button>
+      <div>
+        Ticker: 
+        <input type="text" id="input-value">
+      </div>
+      
+      <div>
+        Time Series: 
+        <select name="time-series-options" id="time-series"></select>
+      </div>
+     
+      <div>
+        <button id="input-click">Fetch Data</button>
+      </div>
+      
     </div>
-    <div></div>
-    <div></div>
-    <div></div>
-
 
   </div>
 </body>

@@ -1,0 +1,16 @@
+#input-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 300px;
+}
+
+#input-div > * {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px;
+}
+
+
+
+
