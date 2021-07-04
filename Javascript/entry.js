@@ -17,7 +17,6 @@ exportCSVEl.onclick = exportCSVHandle;
 let tableEl = document.getElementById("result");
 
 
-
 // Dropdown Option
 let timeSeriesDropDown = document.getElementById("time-series");
 let timeSeriesArray = Object.keys(timePeriodOptions).map(name => {
