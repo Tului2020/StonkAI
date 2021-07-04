@@ -26,15 +26,21 @@ const urlGenerator = (func, symbol) => {
   return `${baseURL}function=${func}&symbol${symbol}&apikey=${apiKey}`
 }
 
-const fetchIinformation = () => {
-  debugger
-  fetch('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=IBM&apikey=demo')
+const fetchIinformation = (func, symbol) => {
+  console.log("contacting....");
+  console.log(urlGenerator(func, symbol));
+
+  fetch(urlGenerator(func, symbol))
     .then(response => response.json())
     .then((data) => {
       
 
       console.log(data)
-    });
+    })
+    .catch(e => console.log(e))
+    ;
 }
+
+
 
 
