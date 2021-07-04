@@ -7,7 +7,7 @@ const timePeriodOptions = {
   intraDayExtended: { apiFunction: 'TIME_SERIES_INTRADAY_EXTENDED', name: 'intraDayExtended', deconstructName: '' },
 
   daily: { apiFunction: 'TIME_SERIES_DAILY', name: 'daily', deconstructName: 'Time Series (Daily)' },
-  dailyAdjusted: { apiFunction: 'TIME_SERIES_INTRADAY_EXTENDED', name: 'dailyAdjusted', deconstructName: '' },
+  dailyAdjusted: { apiFunction: 'TIME_SERIES_DAILY_ADJUSTED', name: 'dailyAdjusted', deconstructName: 'Time Series (Daily)' },
 
   weekly: { apiFunction: 'TIME_SERIES_DAILY', name: 'weekly', deconstructName: '' },
   weeklyAdjusted: { apiFunction: 'TIME_SERIES_INTRADAY_EXTENDED', name: 'weeklyAdjusted', deconstructName: '' },
@@ -19,7 +19,9 @@ const timePeriodOptions = {
 
 // FUNCTIONS
 const urlGenerator = (func, symbol) => {
-  return `${baseURL}function=${func}&symbol=${symbol}&apikey=${apiKey}`
+  let returnURL = `${baseURL}function=${func}&symbol=${symbol}${(func === 'TIME_SERIES_DAILY_ADJUSTED') ? ('&outputsize=full') : ('')}&apikey=${apiKey}`
+  console.log(returnURL)
+  return returnURL
 }
 
 const exportCSVHandle = () => {
@@ -30,7 +32,7 @@ const exportCSVHandle = () => {
 const fetchIinformation = (func, symbol, deconstructName) => {
   fetch(urlGenerator(func, symbol))
     .then(response => response.json())
-    .then((data) => {
+    .then(data => {
       displayData(data[deconstructName])
     })
     .catch(e => console.log(e))
@@ -42,6 +44,7 @@ const displayData = (data) => {
   let dates = Object.keys(data);
   let columns = ["dates"].concat(Object.keys(data[dates[0]]));
 
+  // clears previous data
   removeAllChildNodes(tableEl);
 
   // creates header
@@ -63,24 +66,13 @@ const displayData = (data) => {
     rowItems.forEach(rowItem => {
       let rowColEl = document.createElement("td");
       rowColEl.innerText = rowItem
-      // debugger
-
       rowEl.appendChild(rowColEl)
     });
-
-    // debugger
     tableEl.appendChild(rowEl)
-
-    // console.log(rowItems)
   })
 
 
-}
-
-// const createRow = () => {
-
-// }
-
+};
 
 
 const removeAllChildNodes = (parent) => {

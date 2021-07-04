@@ -17,7 +17,6 @@ exportCSVEl.onclick = exportCSVHandle;
 let tableEl = document.getElementById("result");
 
 
-
 // Dropdown Option
 let timeSeriesDropDown = document.getElementById("time-series");
 let timeSeriesArray = Object.keys(timePeriodOptions).map(name => {
@@ -28,7 +27,7 @@ timeSeriesArray.forEach(name => {
   let newOption = document.createElement("option");
   newOption.value = name;
   newOption.innerText = name;
-  if (name === 'daily')
+  if (name === 'dailyAdjusted' || name=== 'daily')
     timeSeriesDropDown.appendChild(newOption)
 });
 
